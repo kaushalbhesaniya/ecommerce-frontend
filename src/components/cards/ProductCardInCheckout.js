@@ -22,11 +22,15 @@ const ProductCardInCheckout = ({ p }) => {
         cart = JSON.parse(localStorage.getItem("cart"));
       }
 
-      cart.map((product, i) => {
-        if (product._id === p._id) {
-          cart[i].color = e.target.value;
-        }
-      });
+      // cart.map((product, i) => {
+      //   if (product._id === p._id) {
+      //     cart[i].color = e.target.value;
+      //   }
+      // });
+
+      cart.map((product, i) =>
+        product._id === p._id ? (cart[i].color = e.target.value) : ""
+      );
 
       //  console.log('cart udpate color', cart)
       localStorage.setItem("cart", JSON.stringify(cart));
@@ -53,11 +57,14 @@ const ProductCardInCheckout = ({ p }) => {
         cart = JSON.parse(localStorage.getItem("cart"));
       }
 
-      cart.map((product, i) => {
-        if (product._id == p._id) {
-          cart[i].count = count;
-        }
-      });
+      // cart.map((product, i) => {
+      //   if (product._id === p._id) {
+      //     cart[i].count = count;
+      //   }
+      // });
+      cart.map((product, i) =>
+        product._id === p._id ? (cart[i].count = count) : ""
+      );
 
       localStorage.setItem("cart", JSON.stringify(cart));
       dispatch({
@@ -76,11 +83,16 @@ const ProductCardInCheckout = ({ p }) => {
         cart = JSON.parse(localStorage.getItem("cart"));
       }
       // [1,2,3,4,5]
-      cart.map((product, i) => {
-        if (product._id === p._id) {
-          cart.splice(i, 1);
-        }
-      });
+
+      // cart.map((product, i) => {
+      //   if (product._id === p._id) {
+      //     cart.splice(i, 1);
+      //   }
+      // });
+
+      cart.map((product, i) =>
+        product._id === p._id ? cart.splice(i, 1) : ""
+      );
 
       localStorage.setItem("cart", JSON.stringify(cart));
       dispatch({

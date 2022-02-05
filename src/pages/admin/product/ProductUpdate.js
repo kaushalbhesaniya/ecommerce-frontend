@@ -36,11 +36,6 @@ const ProductUpdate = ({ match, history }) => {
   // router
   const { slug } = match.params;
 
-  useEffect(() => {
-    loadProduct();
-    loadCategories();
-  }, []);
-
   const loadProduct = () => {
     getProduct(slug).then((p) => {
       setValues({ ...values, ...p.data });
@@ -51,18 +46,23 @@ const ProductUpdate = ({ match, history }) => {
 
       let arr = [];
       p.data.subs.map((s) => {
-        arr.push(s._id);
+        return arr.push(s._id);
       });
       console.log("ARR", arr);
       setArrayOfSubs((prev) => arr);
     });
   };
 
-  const loadCategories = () =>
-    getCategories().then((c) => {
-      console.log("GET CATEGORIES IN UPDATE PRODUCT", c.data);
-      setCategories(c.data);
-    });
+  useEffect(() => {
+    const loadCategories = () =>
+      getCategories().then((c) => {
+        console.log("GET CATEGORIES IN UPDATE PRODUCT", c.data);
+        setCategories(c.data);
+      });
+
+    loadProduct();
+    loadCategories();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleSubmit = (e) => {
     e.preventDefault();

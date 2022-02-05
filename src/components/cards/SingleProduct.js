@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Card, Tabs, Tooltip } from "antd";
-import { Link } from "react-router-dom";
+
 import { HeartOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
@@ -22,7 +22,7 @@ const SingleProduct = ({ product, onStarClick, star }) => {
   const [tooltip, setTooltip] = useState("Click to add");
 
   // redux
-  const { user, cart } = useSelector((state) => ({ ...state }));
+  const { user } = useSelector((state) => ({ ...state }));
   const dispatch = useDispatch();
   // router
   let history = useHistory();
@@ -77,10 +77,15 @@ const SingleProduct = ({ product, onStarClick, star }) => {
       <div className="col-md-7">
         {images && images.length ? (
           <Carousel showArrows={true} autoPlay infiniteLoop>
-            {images && images.map((i) => <img src={i.url} key={i.public_id} />)}
+            {images &&
+              images.map((i) => (
+                <img alt="img" src={i.url} key={i.public_id} />
+              ))}
           </Carousel>
         ) : (
-          <Card cover={<img src={Laptop} className="mb-3 card-image" />}></Card>
+          <Card
+            cover={<img alt="img" src={Laptop} className="mb-3 card-image" />}
+          ></Card>
         )}
 
         <Tabs type="card">
@@ -105,13 +110,17 @@ const SingleProduct = ({ product, onStarClick, star }) => {
         <Card
           actions={[
             <Tooltip placement="top" title={tooltip}>
-              <a onClick={handleAddToCart} disabled={product.quantity < 1}>
+              <a
+                href="/#"
+                onClick={handleAddToCart}
+                disabled={product.quantity < 1}
+              >
                 <ShoppingCartOutlined className="text-danger" />
                 <br />
                 {product.quantity < 1 ? "Out of Stock" : "Add To Cart"}
               </a>
             </Tooltip>,
-            <a onClick={handleAddToWishlist}>
+            <a href="/#" onClick={handleAddToWishlist}>
               <HeartOutlined className="text-info" /> <br /> Add to Wishlist
             </a>,
             <RatingModal>

@@ -11,21 +11,20 @@ const BestSellers = () => {
   const [page, setPage] = useState(1);
 
   useEffect(() => {
-    loadAllProducts();
-  }, [page]);
-
-  useEffect(() => {
     getProductsCount().then((res) => setProductsCount(res.data));
   }, []);
 
-  const loadAllProducts = () => {
-    setLoading(true);
-    // sort, order, limit
-    getProducts("sold", "desc", page).then((res) => {
-      setProducts(res.data);
-      setLoading(false);
-    });
-  };
+  useEffect(() => {
+    const loadAllProducts = () => {
+      setLoading(true);
+      // sort, order, limit
+      getProducts("sold", "desc", page).then((res) => {
+        setProducts(res.data);
+        setLoading(false);
+      });
+    };
+    loadAllProducts();
+  }, [page]);
 
   return (
     <>

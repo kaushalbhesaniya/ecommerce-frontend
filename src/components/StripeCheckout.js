@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { createPaymentIntent } from "../functions/stripe";
 import { Link } from "react-router-dom";
 import { Card } from "antd";
-import { DollarOutlined, CheckOutlined, SwapOutlined } from "@ant-design/icons";
+import { DollarOutlined, CheckOutlined } from "@ant-design/icons";
 import Laptop from "../images/laptop.png";
 import { createOrder, emptyUserCart } from "../functions/user";
 
@@ -34,7 +34,7 @@ const StripeCheckout = ({ history }) => {
       setTotalAfterDiscount(res.data.totalAfterDiscount);
       setPayable(res.data.payable);
     });
-  }, []);
+  }, [user.token, coupon]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -121,6 +121,7 @@ const StripeCheckout = ({ history }) => {
         <Card
           cover={
             <img
+              alt="img"
               src={Laptop}
               style={{
                 height: "200px",

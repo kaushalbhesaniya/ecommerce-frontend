@@ -14,9 +14,16 @@ const Product = ({ match }) => {
 
   const { slug } = match.params;
 
+  const loadSingleProduct = () => {
+    getProduct(slug).then((res) => {
+      setProduct(res.data);
+      // load related
+      getRelated(res.data._id).then((res) => setRelated(res.data));
+    });
+  };
   useEffect(() => {
     loadSingleProduct();
-  }, [slug]);
+  }, [slug]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (product.ratings && user) {
@@ -25,15 +32,7 @@ const Product = ({ match }) => {
       );
       existingRatingObject && setStar(existingRatingObject.star); // current user's star
     }
-  });
-
-  const loadSingleProduct = () => {
-    getProduct(slug).then((res) => {
-      setProduct(res.data);
-      // load related
-      getRelated(res.data._id).then((res) => setRelated(res.data));
-    });
-  };
+  }, [product.ratings, user]);
 
   const onStarClick = (newRating, name) => {
     setStar(newRating);

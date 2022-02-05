@@ -34,11 +34,10 @@ const ProductCreate = () => {
   const { user } = useSelector((state) => ({ ...state }));
 
   useEffect(() => {
+    const loadCategories = () =>
+      getCategories().then((c) => setValues({ ...values, categories: c.data }));
     loadCategories();
-  }, []);
-
-  const loadCategories = () =>
-    getCategories().then((c) => setValues({ ...values, categories: c.data }));
+  }, [values]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
